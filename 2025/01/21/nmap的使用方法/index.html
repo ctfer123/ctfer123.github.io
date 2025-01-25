@@ -27,7 +27,7 @@
 <meta property="og:description" content="nmap扫描一、功能: 主机发现 端口扫描 版本侦测 OS侦测 漏洞扫描  二、功能解析Ⅰ、主机发现主机发现的命令原理和ping差不多，但不仅仅局限于ping。如果收到回复，则证明主机是打开的，nmap可以使用多种方法来证明主机是否启动，可以防止单一方法被防护墙隔断，如windows系统的防火墙。 12nmap -sP  ip								#单个主机nmap -sP ip,ip				#多个主机">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-21T08:26:44.000Z">
-<meta property="article:modified_time" content="2025-01-21T10:30:49.574Z">
+<meta property="article:modified_time" content="2025-01-25T12:09:22.612Z">
 <meta property="article:author" content="Zhang">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -326,8 +326,12 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">open:端口是开放的。</span><br><span class="hljs-section">closed:端口是关闭的。 </span><br><span class="hljs-section">filtered:端口被防火墙或IDS/IPS屏蔽，无法确定其状态。</span><br><span class="hljs-section">unfiltered:端口没有被屏被，但是否开放需要进一步确定。 </span><br><span class="hljs-section">open|filtered:端口是开放的或被屏蔽。 </span><br><span class="hljs-section">closed|filtered:端口是关闭的或被屏敲。</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="Ⅲ、版本侦测"><a href="#Ⅲ、版本侦测" class="headerlink" title="Ⅲ、版本侦测"></a>Ⅲ、版本侦测</h3><p>版本侦测主要分为以下几个步骤： </p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-number">1</span>,首先检查<span class="hljs-keyword">open</span>与<span class="hljs-keyword">open</span>|filtered状态的端口是否在排除端口列表内。如果在排除列表，将该端口别除，<br><br><span class="hljs-number">2</span>.如果是TcP端口，尝试建立TCP连接。尝试等待片刻（通常<span class="hljs-number">6</span>秒或更多，具体时间可以查询文件<span class="hljs-keyword">nmap</span>-services-probes中Probe TCP NULL q|对应的totalwaitms)。通常在等待时间内，会接收到目标机发送的“WelcomeBanner”信息。<span class="hljs-keyword">nmap</span>将接收到的Banner与<span class="hljs-keyword">nmap</span>-services- probes中NULL probe中的签名进行对比。查找对应应用程序的名字与版本信息。 <br><br><span class="hljs-number">3</span>.如果通过“Welcome Banner”无法确定应用程序版本，那么<span class="hljs-keyword">nmap</span>再尝试发送其他的探测包（即从<span class="hljs-keyword">nmap</span>-services-probes中挑选合适的probe),将probe得到回复包与数据库中的签名进行对比。如果反复探测都无法得出具体应用，那么打印出应用返回报文，让用户自行进一步判定。 <br><br><span class="hljs-number">4</span>,如果是UDP端口，那么直接使用<span class="hljs-keyword">nmap</span>-services-probes中探测包进行探测匹配。根据结果对比分析出UDP应用服务类型。 <br><br><span class="hljs-number">5</span>,如果探测到应用程序是sSL,那么调用openSSL进一步的侦查运行在SSL之上的具体的应用类型。 <br><br><span class="hljs-number">6</span>.如果探测到应用程序是SunRPC,那么调用orute-force RPC grinder进一步探测具体服务。<br></code></pre></td></tr></table></figure>
-
+<p>1,首先检查open与open|filtered状态的端口是否在排除端口列表内。如果在排除列表，将该端口别除，</p>
+<p>2.如果是TcP端口，尝试建立TCP连接。尝试等待片刻（通常6秒或更多，具体时间可以查询文件nmap-services-probes中Probe TCP NULL q|对应的totalwaitms)。通常在等待时间内，会接收到目标机发送的“WelcomeBanner”信息。nmap将接收到的Banner与nmap-services- probes中NULL probe中的签名进行对比。查找对应应用程序的名字与版本信息。 </p>
+<p>3.如果通过“Welcome Banner”无法确定应用程序版本，那么nmap再尝试发送其他的探测包（即从nmap-services-probes中挑选合适的probe),将probe得到回复包与数据库中的签名进行对比。如果反复探测都无法得出具体应用，那么打印出应用返回报文，让用户自行进一步判定。 </p>
+<p>4,如果是UDP端口，那么直接使用nmap-services-probes中探测包进行探测匹配。根据结果对比分析出UDP应用服务类型。 </p>
+<p>5,如果探测到应用程序是sSL,那么调用openSSL进一步的侦查运行在SSL之上的具体的应用类型。 </p>
+<p>6.如果探测到应用程序是SunRPC,那么调用orute-force RPC grinder进一步探测具体服务。</p>
 <p>基本用法</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vim">--sV:指定让：Nmap进行版本侦测<br>--<span class="hljs-keyword">version</span>-ntensity<span class="hljs-symbol">&lt;level&gt;</span>:指定版本侦测强度(<span class="hljs-number">0</span>-<span class="hljs-number">9</span>)，默认为<span class="hljs-number">7</span>。数值越高，探测出的服务越准确，但是运行时间会比较长。<br>--<span class="hljs-keyword">version</span>-light:指定使用径录侦测方式(intensity <span class="hljs-number">2</span>)<br>--<span class="hljs-keyword">version</span>-<span class="hljs-keyword">all</span>:尝试使用所有的probes.进行侦测(intensity <span class="hljs-number">9</span>)<br>--<span class="hljs-keyword">version</span>-trace:显示出详细的版本侦测过程信息。<br></code></pre></td></tr></table></figure>
 
