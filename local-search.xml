@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>关于信息收集的心得</title>
+    <link href="/2025/01/25/%E5%85%B3%E4%BA%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%9A%84%E5%BF%83%E5%BE%97/"/>
+    <url>/2025/01/25/%E5%85%B3%E4%BA%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%9A%84%E5%BF%83%E5%BE%97/</url>
+    
+    <content type="html"><![CDATA[<h1 id="信息收集的心得"><a href="#信息收集的心得" class="headerlink" title="信息收集的心得"></a>信息收集的心得</h1><p>信息收集的大部分题目比较简单，不需要太高的技术水平，只需要有仔细、大胆、脑洞即可。</p><h1 id="几个方向的思路"><a href="#几个方向的思路" class="headerlink" title="几个方向的思路"></a>几个方向的思路</h1><h3 id="一、查看源代码"><a href="#一、查看源代码" class="headerlink" title="一、查看源代码"></a>一、查看源代码</h3><p>在简单的题目中会有这些会有这样的解法，有时网站会禁止使用某个方式，需要掌握多种查看方法。</p><p>查看源代码的方式有：</p><ol><li>ctrl+u</li><li>右键</li><li>使用Burp suite抓包</li></ol><h3 id="二、抓包看响应"><a href="#二、抓包看响应" class="headerlink" title="二、抓包看响应"></a>二、抓包看响应</h3><p>有些信息会藏在<strong>响应Cookies</strong>里，或者直接就能看到。</p><h3 id="三、disearch工具扫描"><a href="#三、disearch工具扫描" class="headerlink" title="三、disearch工具扫描"></a>三、disearch工具扫描</h3><p>可以通过<strong>disearch</strong>工具对网站进行扫描，Dirsearch是一个基于Python的命令行工具，主要用于<strong>暴力扫描Web服务器的目录和文件</strong>。这个工具可以帮助渗透测试人员发现网站的隐藏目录，这些目录可能包含敏感信息或潜在的攻击媒介。Dirsearch通过自定义字典进行扫描，支持多线程，使得扫描过程快速高效。</p><p>在扫描过后找到敏感文件，比如：robots.txt，index.phps，.git等。</p><h3 id="四、在网页中寻找"><a href="#四、在网页中寻找" class="headerlink" title="四、在网页中寻找"></a>四、在网页中寻找</h3><p>在信息收集中网页中可能潜藏信息，比如ctfshow中web13中<img src="D:\blog\Github\source\图\1737794450986.png" alt="1737794450986"></p><p>敏感信息，解题关键就在这儿。<strong>（耐心去找，才有可能找到）！！！</strong></p><h3 id="五、目录"><a href="#五、目录" class="headerlink" title="五、目录"></a>五、目录</h3><p>通过在网站的源目录里找到flag</p><h3 id="六、PHP探针"><a href="#六、PHP探针" class="headerlink" title="六、PHP探针"></a>六、PHP探针</h3><p>PHP探针php探针是用来探测空间、服务器运行状况和PHP信息用的，探针可以实时查看服务器硬盘资源、内存占用、网卡 流量、系统负载、服务器时间等信息。 </p><p>PHP探针是测试用的，但是探针漏洞类型的题目中可以使用。</p><p>通过探针可以获取许多信息。</p><p>探针通常为 tz.php。</p><h3 id="七、游戏"><a href="#七、游戏" class="headerlink" title="七、游戏"></a>七、游戏</h3><p>在是小游戏的信息收集中源代码里往往藏着游戏胜利的条件，只需要在源代码里寻找即可。</p><h3 id="八、asp-access构建的数据库"><a href="#八、asp-access构建的数据库" class="headerlink" title="八、asp+access构建的数据库"></a>八、asp+access构建的数据库</h3><p>.mdb文件是早期Access数据库的文件（2003版）  还有.accdb（2007版）。</p><p>MDB 文件包含数据库查询、表等，可用于链接和存储来自其他文件（如 XML 和 HTML）以及应用程序（如 <a href="https://cn.windows.day/?cat=excel">Excel</a> 和 SharePoint）的数据。 LDB 文件有时与 Access 数据库文件位于同一文件夹中；它是一个临时存储在共享数据库中的 Access <em>锁定</em>文件。</p><p>可以通过访问.mdb文件</p><p>也可以通过多次dirsearch扫描，找到文件。</p><p>如遇到其他方法还会添加。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>nmap的使用方法</title>
     <link href="/2025/01/21/nmap%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
     <url>/2025/01/21/nmap%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
